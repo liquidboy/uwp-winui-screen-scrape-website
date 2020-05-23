@@ -32,8 +32,15 @@ namespace screenscrape_website
             _wv.WebMessageReceived += _wv_WebMessageReceived;
             _wv.NavigationCompleted += _wv_NavigationCompleted;
             layoutRoot.Children.Add(_wv);
-            tbSearch.Text = "https://flatuicolors.com";
 
+            cbUrls.Items.Add("https://flatuicolors.com");
+            cbUrls.SelectionChanged += CbUrls_SelectionChanged;
+        }
+
+        private void CbUrls_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tbScript.Text = string.Empty;
+            butInject.IsEnabled = false;
         }
 
         private void _wv_NavigationCompleted(WebView2 sender, WebView2NavigationCompletedEventArgs args)
@@ -41,6 +48,7 @@ namespace screenscrape_website
             if (!args.IsSuccess) return;
             var json = LoadJsonFromEmbeddedResource(_wv.Source.Host);
             tbScript.Text = json;
+            butInject.IsEnabled = true;
         }
 
         private string LoadJsonFromEmbeddedResource(string siteUrl) {
@@ -66,7 +74,8 @@ namespace screenscrape_website
 
         private async void butSearch_Click(object sender, RoutedEventArgs e)
         {
-            _wv.Source = new Uri(tbSearch.Text);
+            if(cbUrls.SelectedValue != null)
+                _wv.Source = new Uri((string)cbUrls.SelectedValue);
         }
 
         private async void butInject_Click(object sender, RoutedEventArgs e)
