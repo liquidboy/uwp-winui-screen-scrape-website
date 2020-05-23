@@ -1,0 +1,29 @@
+﻿<Page
+  x:Class="screenscrape_website.MainPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:screenscrape_website"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="layoutRoot">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Height="150" VerticalAlignment="Top" >
+            <TextBox Width="400" Height="30" x:Name="tbSearch" VerticalAlignment="Top"></TextBox>
+            <Button x:Name="butSearch" Click="butSearch_Click" Margin="5,0,0,0" VerticalAlignment="Top">Load URL</Button>
+
+            <ScrollViewer Width="500" Height="150" Margin="10,0,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                <TextBox x:Name="tbScript" AcceptsReturn="True"></TextBox>
+            </ScrollViewer>
+
+            <Button x:Name="butInject" Click="butInject_Click" Margin="5,0,0,0" VerticalAlignment="Bottom">Inject JS</Button>
+
+            <ScrollViewer Width="330" Height="150" Margin="10,0,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                <Border BorderThickness="1" BorderBrush="WhiteSmoke" Background="WhiteSmoke">
+                    <TextBlock x:Name="tbCallback" TextWrapping="NoWrap" Foreground="LightGray" ></TextBlock>
+                </Border>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>
