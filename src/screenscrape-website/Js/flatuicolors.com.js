@@ -25,6 +25,8 @@ if (!!window['injectedFunction'] === false) {
 
     };
     alert('js injected from UWP & function created in webview2');
+} else {
+    alert('js has already been injected into webview2');
 };
 
 // execute injected function

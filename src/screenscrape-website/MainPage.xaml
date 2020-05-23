@@ -10,14 +10,19 @@
 
     <Grid x:Name="layoutRoot">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Height="150" VerticalAlignment="Top" >
-            <ComboBox x:Name="cbUrls" Width="400" Height="30" VerticalAlignment="Top"></ComboBox>
-            <Button x:Name="butSearch" Click="butSearch_Click" Margin="5,0,0,0" VerticalAlignment="Top">Load URL</Button>
+            <StackPanel Orientation="Vertical" >
+                <StackPanel Orientation="Horizontal" Height="30" >
+                    <ComboBox x:Name="cbUrls" Width="500" VerticalAlignment="Top"></ComboBox>
+                    <Button x:Name="butSearch" Click="butSearch_Click" Margin="5,0,0,0" Width="100">1. Load URL</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="120"  >
+                    <ScrollViewer Width="500" Height="120" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                        <TextBox x:Name="tbScript" AcceptsReturn="True"></TextBox>
+                    </ScrollViewer>
+                    <Button x:Name="butInject" Click="butInject_Click" Margin="5,0,0,0" VerticalAlignment="Bottom" IsEnabled="False" Width="100">2. Inject JS</Button>
+                </StackPanel>
+            </StackPanel>
 
-            <ScrollViewer Width="500" Height="150" Margin="10,0,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
-                <TextBox x:Name="tbScript" AcceptsReturn="True"></TextBox>
-            </ScrollViewer>
-
-            <Button x:Name="butInject" Click="butInject_Click" Margin="5,0,0,0" VerticalAlignment="Bottom" IsEnabled="False">Inject JS</Button>
 
             <ScrollViewer Width="330" Height="150" Margin="10,0,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
                 <Border BorderThickness="1" BorderBrush="WhiteSmoke" Background="WhiteSmoke">
