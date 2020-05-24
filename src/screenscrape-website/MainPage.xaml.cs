@@ -21,6 +21,10 @@ namespace screenscrape_website
     {
         private WebView2 _wv;
 
+        private const string CONST_UNITY_COLOR_LIBRARY = "unity color library";
+        private const string CONST_UWP_RESOURCE_DICTIONARY = "uwp resource dictionary";
+        private const string CONST_URL_FLATUICOLORS = "https://flatuicolors.com";
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -33,11 +37,11 @@ namespace screenscrape_website
             _wv.NavigationCompleted += _wv_NavigationCompleted;
             layoutRoot.Children.Add(_wv);
 
-            cbUrls.Items.Add("https://flatuicolors.com");
+            cbUrls.Items.Add(CONST_URL_FLATUICOLORS);
             cbUrls.SelectionChanged += CbUrls_SelectionChanged;
 
-            cbConversionTargets.Items.Add("unity ColorLibrary");
-            cbConversionTargets.Items.Add("uwp ResourceDictionary");
+            cbConversionTargets.Items.Add(CONST_UNITY_COLOR_LIBRARY);
+            cbConversionTargets.Items.Add(CONST_UWP_RESOURCE_DICTIONARY);
             cbConversionTargets.SelectionChanged += CbConversionTargets_SelectionChanged;
         }
 
@@ -110,28 +114,40 @@ namespace screenscrape_website
             DoConversion((string)cbConversionTargets.SelectedValue);
         }
 
+        // todo: very unperformant BUT for demo its fine
         private void DoConversion(string conversionType)
         {
             var parseString = tbCallback.Text;
 
             var lines = parseString.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
+            var colorCounter = 0;
             foreach (var line in lines) {
                 var cleanedString = line.Trim().ToLower();
-                if (cleanedString.Substring(0, 3) == "rgb") {
+
+                if (!string.IsNullOrEmpty(cleanedString) && cleanedString.Substring(0, 3) == "rgb") {
                     var parts = cleanedString.Split(";");
                     cleanedString = parts[0].Replace("rgb(", string.Empty).Replace(")",string.Empty);
                     var colorParts = cleanedString.Split(",");
 
-                    var r = int.Parse(colorParts[0]) / 255f;
-                    var g = int.Parse(colorParts[1]) / 255f;
-                    var b = int.Parse(colorParts[2]) / 255f;
+                    var formattedColor = string.Empty;
+                    if (conversionType == CONST_UNITY_COLOR_LIBRARY) {
+                        var r = int.Parse(colorParts[0]) / 255f;
+                        var g = int.Parse(colorParts[1]) / 255f;
+                        var b = int.Parse(colorParts[2]) / 255f;
 
-                    var formatColor = $@"  - m_Name: 
+                        formattedColor = $@"  - m_Name: COLOR_{colorCounter}
     m_Color: {{r: {r}, g: {g}, b: {b}, a: 1}}
 ";
+                    } else if (conversionType == CONST_UWP_RESOURCE_DICTIONARY) {
+                        var myColor = Windows.UI.Color.FromArgb(255, byte.Parse(colorParts[0]), byte.Parse(colorParts[1]), byte.Parse(colorParts[2]));
 
-                    tbConversionResult.Text += formatColor;
+                        formattedColor = $@"<Color x:Key=""COLOR_{colorCounter}"">#{myColor.R:X2}{myColor.G:X2}{myColor.B:X2}</Color>
+";
+                    }
+
+                    tbConversionResult.Text += formattedColor;
+                    colorCounter++;
                 }
             }
         }
