@@ -25,6 +25,8 @@ namespace screenscrape_website
         private const string CONST_UWP_RESOURCE_DICTIONARY = "uwp resource dictionary";
         private const string CONST_URL_FLATUICOLORS = "https://flatuicolors.com";
 
+        private const string CONST_WV_TO_UWP_MSG_CLEAR = "clear-textbox";
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -86,7 +88,7 @@ namespace screenscrape_website
 
         private void _wv_WebMessageReceived(WebView2 sender, WebView2WebMessageReceivedEventArgs args)
         {
-            if (args.WebMessageAsString == "clear-textbox") tbCallback.Text = "";
+            if (args.WebMessageAsString == CONST_WV_TO_UWP_MSG_CLEAR) tbCallback.Text = "";
             else tbCallback.Text += args.WebMessageAsString;
         }
 
