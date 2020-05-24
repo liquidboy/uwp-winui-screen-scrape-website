@@ -27,6 +27,7 @@ namespace screenscrape_website
         private const string CONST_URL_COLORHEX = "https://color-hex.com";
 
         private const string CONST_WV_TO_UWP_MSG_CLEAR = "clear-textbox";
+        private const string CONST_WV_TO_UWP_MSG_FINISHED_SCRAPING = "finished-scraping";
 
         public MainPage()
         {
@@ -52,6 +53,7 @@ namespace screenscrape_website
         private void CbConversionTargets_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             butConvert.IsEnabled = true;
+            cbConversionTargets.IsEnabled = true;
             tbConversionResult.Text = string.Empty;
         }
 
@@ -64,6 +66,7 @@ namespace screenscrape_website
 
             butConvert.IsEnabled = false;
             cbConversionTargets.SelectedIndex = -1;
+            cbConversionTargets.IsEnabled = false;
             tbConversionResult.Text = string.Empty;
         }
 
@@ -93,6 +96,7 @@ namespace screenscrape_website
         private void _wv_WebMessageReceived(WebView2 sender, WebView2WebMessageReceivedEventArgs args)
         {
             if (args.WebMessageAsString == CONST_WV_TO_UWP_MSG_CLEAR) tbCallback.Text = "";
+            else if (args.WebMessageAsString == CONST_WV_TO_UWP_MSG_FINISHED_SCRAPING) cbConversionTargets.IsEnabled = true;
             else tbCallback.Text += args.WebMessageAsString;
         }
 

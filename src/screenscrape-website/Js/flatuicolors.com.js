@@ -23,6 +23,7 @@ if (!!window['injectedFunction'] === false) {
             return xe.style;
         });
 
+        window.chrome.webview.postMessage(`finished-scraping`);
     };
     alert('js injected from UWP & function created in webview2');
 } else {

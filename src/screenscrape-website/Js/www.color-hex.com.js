@@ -18,6 +18,8 @@ if (!!window['injectedFunction'] === false) {
             window.chrome.webview.postMessage(`${xe.style['background-color']}; ${xe.title} \n`);
             return xe.style;
         });
+
+        window.chrome.webview.postMessage(`finished-scraping`);
     };
     alert('js injected from UWP & function created in webview2');
 } else {
