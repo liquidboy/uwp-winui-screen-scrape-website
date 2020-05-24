@@ -11,8 +11,8 @@ if (!!window['injectedFunction'] === false) {
         }
 
         window.chrome.webview.postMessage(`clear-textbox`);
-        window.chrome.webview.postMessage(`sending ${foundColors.length} colors from webview2 to uwp host \n\r`);
-        if (foundAuthor !== undefined) window.chrome.webview.postMessage(`author ${foundAuthor} \n\r`);
+        alert(`sending ${foundColors.length} colors from webview2 to uwp host \n`);
+        if (foundAuthor !== undefined) window.chrome.webview.postMessage(`author ${foundAuthor} \n`);
 
         var foundElements = Array.prototype.filter.call(foundColors, function (xe) {
             var colorName = '';

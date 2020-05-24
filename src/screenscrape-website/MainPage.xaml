@@ -23,12 +23,21 @@
                 </StackPanel>
             </StackPanel>
 
-
-            <ScrollViewer Width="330" Height="150" Margin="10,0,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+            <ScrollViewer Width="330" Height="150" Margin="5,0,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
                 <Border BorderThickness="1" BorderBrush="WhiteSmoke" Background="WhiteSmoke">
                     <TextBlock x:Name="tbCallback" TextWrapping="NoWrap" Foreground="LightGray" ></TextBlock>
                 </Border>
             </ScrollViewer>
+            <Button x:Name="butConvert" Margin="5,0,0,0" VerticalAlignment="Center" IsEnabled="False" Width="100" Click="butConvert_Click">3. Convert</Button>
+
+            <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                <ComboBox x:Name="cbConversionTargets" Width="500"></ComboBox>
+                <StackPanel Orientation="Horizontal" Height="115"  >
+                    <ScrollViewer Width="500" Height="115" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                        <TextBox x:Name="tbConversionResult" AcceptsReturn="True"></TextBox>
+                    </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

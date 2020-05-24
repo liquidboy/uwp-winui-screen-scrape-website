@@ -35,12 +35,26 @@ namespace screenscrape_website
 
             cbUrls.Items.Add("https://flatuicolors.com");
             cbUrls.SelectionChanged += CbUrls_SelectionChanged;
+
+            cbConversionTargets.Items.Add("unity ColorLibrary");
+            cbConversionTargets.Items.Add("uwp ResourceDictionary");
+            cbConversionTargets.SelectionChanged += CbConversionTargets_SelectionChanged;
+        }
+
+        private void CbConversionTargets_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            butConvert.IsEnabled = true;
+            tbConversionResult.Text = string.Empty;
         }
 
         private void CbUrls_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             tbScript.Text = string.Empty;
             butInject.IsEnabled = false;
+
+            butConvert.IsEnabled = false;
+            cbConversionTargets.SelectedIndex = -1;
+            tbConversionResult.Text = string.Empty;
         }
 
         private void _wv_NavigationCompleted(WebView2 sender, WebView2NavigationCompletedEventArgs args)
@@ -91,7 +105,36 @@ namespace screenscrape_website
 
         }
 
+        private void butConvert_Click(object sender, RoutedEventArgs e)
+        {
+            DoConversion((string)cbConversionTargets.SelectedValue);
+        }
 
-        
+        private void DoConversion(string conversionType)
+        {
+            var parseString = tbCallback.Text;
+
+            var lines = parseString.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var line in lines) {
+                var cleanedString = line.Trim().ToLower();
+                if (cleanedString.Substring(0, 3) == "rgb") {
+                    var parts = cleanedString.Split(";");
+                    cleanedString = parts[0].Replace("rgb(", string.Empty).Replace(")",string.Empty);
+                    var colorParts = cleanedString.Split(",");
+
+                    var r = int.Parse(colorParts[0]) / 255f;
+                    var g = int.Parse(colorParts[1]) / 255f;
+                    var b = int.Parse(colorParts[2]) / 255f;
+
+                    var formatColor = $@"  - m_Name: 
+    m_Color: {{r: {r}, g: {g}, b: {b}, a: 1}}
+";
+
+                    tbConversionResult.Text += formatColor;
+                }
+            }
+        }
+
     }
 }
