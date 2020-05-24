@@ -24,6 +24,7 @@ namespace screenscrape_website
         private const string CONST_UNITY_COLOR_LIBRARY = "unity color library";
         private const string CONST_UWP_RESOURCE_DICTIONARY = "uwp resource dictionary";
         private const string CONST_URL_FLATUICOLORS = "https://flatuicolors.com";
+        private const string CONST_URL_COLORHEX = "https://color-hex.com";
 
         private const string CONST_WV_TO_UWP_MSG_CLEAR = "clear-textbox";
 
@@ -40,6 +41,7 @@ namespace screenscrape_website
             layoutRoot.Children.Add(_wv);
 
             cbUrls.Items.Add(CONST_URL_FLATUICOLORS);
+            cbUrls.Items.Add(CONST_URL_COLORHEX);
             cbUrls.SelectionChanged += CbUrls_SelectionChanged;
 
             cbConversionTargets.Items.Add(CONST_UNITY_COLOR_LIBRARY);
@@ -57,6 +59,8 @@ namespace screenscrape_website
         {
             tbScript.Text = string.Empty;
             butInject.IsEnabled = false;
+
+            tbCallback.Text = string.Empty;
 
             butConvert.IsEnabled = false;
             cbConversionTargets.SelectedIndex = -1;

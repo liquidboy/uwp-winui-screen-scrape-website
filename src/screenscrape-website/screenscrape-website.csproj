@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Js\flatuicolors.com.js" />
+    <EmbeddedResource Include="Js\www.color-hex.com.js" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
