@@ -2,3 +2,6 @@
 /src/screenscrape-website/obj/*
 /src/screenscrape-website/.vs/*
 /src/screenscrape-website/.vs/*
+
+/src/screenscape-website-desktop/screenscape-website-desktop (Package)/obj/*
+/src/screenscape-website-desktop/screenscape-website-desktop/obj/*
