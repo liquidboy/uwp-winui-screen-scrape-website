@@ -8,6 +8,14 @@
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Js\flatuicolors.com.js" />
+    <None Remove="Js\www.color-hex.com.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Js\flatuicolors.com.js" />
+    <EmbeddedResource Include="Js\www.color-hex.com.js" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ProjectReunion" Version="0.5.0-prerelease" />
