@@ -7,19 +7,19 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="0276f053-1a83-4935-94cd-9d5d5e96921b"
+    Name="05b7745d-4b79-44e2-8f61-55bf37bbb6ed"
     Publisher="CN=jofajard"
     Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>screenscape-website-desktop (Package)</DisplayName>
+    <DisplayName>screenscrape-website-core (Package)</DisplayName>
     <PublisherDisplayName>jofajard</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
   </Dependencies>
 
   <Resources>
@@ -31,8 +31,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="screenscape-website-desktop (Package)"
-        Description="screenscape-website-desktop (Package)"
+        DisplayName="screenscrape-website-core (Package)"
+        Description="screenscrape-website-core (Package)"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
@@ -43,7 +43,6 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
 </Package>
