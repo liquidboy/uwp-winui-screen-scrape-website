@@ -10,19 +10,10 @@ if (!!window['injectedFunction'] === false) {
 };
 
 function doWork() {
-    //var foundFromTos = document.querySelectorAll('input[id="amount"]');
-
-    //alert(`${foundFromTos.length} text inputs found`);
-
-    //var input = foundFromTos[0];
-    //input.focus();
-    //input.setAttribute("value", "5.99");
-    //input.value = 7.99;
-
     var amt = document.forms[0].children[1].children[0].children[1].innerText;
-    window.chrome.webview.postMessage(amt);
+    let result = { "result": amt };
+    window.chrome.webview.postMessage( JSON.stringify(result));
 }
-
 
 // execute injected function
 if (!!window['injectedFunction'] === true) {
