@@ -32,6 +32,7 @@ namespace screenscrape_website_core
         private const string CONST_URL_COLORHEX = "https://color-hex.com";
         private const string CONST_URL_BING_CURRENCY = "https://www.bing.com/search?q=convert+us+to+au";
         private const string CONST_URL_GOOGLE_CURRENCY = "https://www.google.com/search?q=au+to+us";
+        private const string CONST_URL_XE_CURRENCY = "https://www.xe.com/currencyconverter/convert/?Amount=665&From=USD&To=AUD";
 
 
         private const string CONST_WV_TO_UWP_MSG_CLEAR = "clear-textbox";
@@ -54,6 +55,7 @@ namespace screenscrape_website_core
             cbUrls.Items.Add(CONST_URL_COLORHEX);
             cbUrls.Items.Add(CONST_URL_BING_CURRENCY);
             cbUrls.Items.Add(CONST_URL_GOOGLE_CURRENCY);
+            cbUrls.Items.Add(CONST_URL_XE_CURRENCY); 
             cbUrls.SelectionChanged += CbUrls_SelectionChanged;
 
             cbConversionTargets.Items.Add(CONST_UNITY_COLOR_LIBRARY);

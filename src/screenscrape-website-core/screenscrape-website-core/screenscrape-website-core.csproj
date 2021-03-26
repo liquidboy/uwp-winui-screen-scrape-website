@@ -11,9 +11,13 @@
   <ItemGroup>
     <None Remove="Js\flatuicolors.com.js" />
     <None Remove="Js\www.color-hex.com.js" />
+    <None Remove="Js\www.google.com.js" />
+    <None Remove="Js\www.xe.com.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Js\flatuicolors.com.js" />
+    <EmbeddedResource Include="Js\www.xe.com.js" />
+    <EmbeddedResource Include="Js\www.google.com.js" />
     <EmbeddedResource Include="Js\www.color-hex.com.js" />
   </ItemGroup>
 

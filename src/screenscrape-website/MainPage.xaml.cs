@@ -28,6 +28,7 @@ namespace screenscrape_website
         private const string CONST_URL_BING_CURRENCY = "https://www.bing.com/search?q=convert+us+to+au";
         private const string CONST_URL_GOOGLE_CURRENCY = "https://www.google.com/search?q=au+to+us";
         
+        
 
         private const string CONST_WV_TO_UWP_MSG_CLEAR = "clear-textbox";
         private const string CONST_WV_TO_UWP_MSG_FINISHED_SCRAPING = "finished-scraping";
