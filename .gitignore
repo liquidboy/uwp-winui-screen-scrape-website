@@ -9,3 +9,5 @@
 /src/screenscrape-website-core/screenscrape-website-core (Package)/obj/*
 /src/screenscrape-website-core/screenscrape-website-core/bin/*
 /src/screenscrape-website-core/screenscrape-website-core/obj/*
+
+/src/screenscrape-website-core/.vs/*

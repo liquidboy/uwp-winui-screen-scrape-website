@@ -1,0 +1,25 @@
+﻿<Window
+    x:Class="screenscrape_website_core.CurrencyConverter"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:screenscrape_website_core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="layoutRoot">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="30">
+            <ComboBox x:Name="cbFrom">
+                <ComboBoxItem>AUD</ComboBoxItem>
+                <ComboBoxItem>USD</ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="cbTo">
+                <ComboBoxItem>AUD</ComboBoxItem>
+                <ComboBoxItem>USD</ComboBoxItem>
+            </ComboBox>
+            <TextBox x:Name="tbAmount"></TextBox>
+            <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Convert"></Button>
+            <TextBlock x:Name="lblConversionAmount"></TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

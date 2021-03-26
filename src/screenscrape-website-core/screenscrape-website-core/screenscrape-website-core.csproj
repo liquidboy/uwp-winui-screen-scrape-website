@@ -9,6 +9,8 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="CurrencyConverter.xaml" />
+    <None Remove="Js\do-currency-conversion.js" />
     <None Remove="Js\flatuicolors.com.js" />
     <None Remove="Js\www.color-hex.com.js" />
     <None Remove="Js\www.google.com.js" />
@@ -16,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Js\flatuicolors.com.js" />
+    <EmbeddedResource Include="Js\do-currency-conversion.js" />
     <EmbeddedResource Include="Js\www.xe.com.js" />
     <EmbeddedResource Include="Js\www.google.com.js" />
     <EmbeddedResource Include="Js\www.color-hex.com.js" />
@@ -26,5 +29,11 @@
     <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.5.0-prerelease" />
     <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.0-prerelease" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="CurrencyConverter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
