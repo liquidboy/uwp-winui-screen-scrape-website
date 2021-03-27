@@ -11,15 +11,15 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="35">
             <ComboBox x:Name="cbFrom" ></ComboBox>
             <TextBox x:Name="tbAmount" Width="200"></TextBox>
-            <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Convert"></Button>
+            <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Converts To"></Button>
             <TextBlock x:Name="lblProcessing"></TextBlock>
         </StackPanel>
         <ListBox Margin="0,60,0,0" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding CurrencyTo}" FontSize="16"></TextBlock>
-                        <TextBlock Text="{Binding Amount}" FontSize="20" Margin="20,0,0,0"></TextBlock>
+                        <TextBlock Text="{Binding CurrencyTo}" FontSize="16" Width="60"></TextBlock>
+                        <TextBlock Text="{Binding Amount}" FontSize="20" Margin="20,0,0,0" Width="100"></TextBlock>
                         <TextBlock Text="{Binding FriendlyCurrency}" FontSize="16" Margin="20,0,0,0"></TextBlock>
                     </StackPanel>
                 </DataTemplate>

@@ -28,9 +28,9 @@ namespace screenscrape_website_core
         Queue<string> _calls = new Queue<string>();
         ObservableCollection<CurrencyConversionResult> _results = new ObservableCollection<CurrencyConversionResult>();
         bool _isProcessingCall = false;
+        int _msTillNextCall = 500;
 
-        string[] _currencies = { "AUD", "EUR", "GBP", "USD" };
-
+        string[] _currencies = { "AUD", "CAD", "CNY", "EUR", "JPY", "GBP", "USD" };
 
         private class CurrencyConversionResult {
             public double Amount { get; set; }
@@ -110,7 +110,7 @@ namespace screenscrape_website_core
 
             _results.Add(result);
 
-            ProcessCalls(1000);
+            ProcessCalls(_msTillNextCall);
         }
 
         
@@ -133,6 +133,8 @@ namespace screenscrape_website_core
 
         private void butDoConversion_Click(object sender, RoutedEventArgs e)
         {
+            if (_isProcessingCall) return;
+
             ClearAll();
             lblProcessing.Text = "processing ...";
 
