@@ -68,7 +68,7 @@ namespace screenscrape_website_core
             foreach (var cur in _currencies) {
                 cbFrom.Items.Add(new ComboBoxItem() { Content = cur });
             }
-
+            cbFrom.SelectedIndex = 0;
             lbResults.ItemsSource = _results;
         }
 

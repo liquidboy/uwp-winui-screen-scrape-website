@@ -5,16 +5,17 @@
     xmlns:local="using:screenscrape_website_core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="35">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="32">
+            <TextBox x:Name="tbAmount" Width="200" FontSize="18"></TextBox>
             <ComboBox x:Name="cbFrom" ></ComboBox>
-            <TextBox x:Name="tbAmount" Width="200"></TextBox>
             <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Converts To"></Button>
-            <TextBlock x:Name="lblProcessing"></TextBlock>
+            <TextBlock x:Name="lblProcessing" Margin="10,5,0,0"></TextBlock>
         </StackPanel>
-        <ListBox Margin="0,60,0,0" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <ListBox Margin="0,40,0,0" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

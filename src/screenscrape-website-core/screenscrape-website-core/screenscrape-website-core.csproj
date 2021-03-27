@@ -29,6 +29,7 @@
     <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.5.0-prerelease" />
     <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.0-prerelease" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PInvoke.Win32" Version="0.7.104" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
