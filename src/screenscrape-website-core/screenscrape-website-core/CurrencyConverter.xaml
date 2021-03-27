@@ -9,21 +9,21 @@
 
     <Grid x:Name="layoutRoot">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="35">
-            <ComboBox x:Name="cbFrom">
-                <ComboBoxItem>AUD</ComboBoxItem>
-                <ComboBoxItem>EUR</ComboBoxItem>
-                <ComboBoxItem>GBP</ComboBoxItem>
-                <ComboBoxItem> USD</ComboBoxItem>
-            </ComboBox>
-            <ComboBox x:Name="cbTo">
-                <ComboBoxItem>AUD</ComboBoxItem>
-                <ComboBoxItem>EUR</ComboBoxItem>
-                <ComboBoxItem>GBP</ComboBoxItem>
-                <ComboBoxItem>USD</ComboBoxItem>
-            </ComboBox>
+            <ComboBox x:Name="cbFrom" ></ComboBox>
             <TextBox x:Name="tbAmount" Width="200"></TextBox>
             <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Convert"></Button>
-            <TextBlock x:Name="lblConversionAmount"></TextBlock>
+            <TextBlock x:Name="lblProcessing"></TextBlock>
         </StackPanel>
+        <ListBox Margin="0,60,0,0" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding CurrencyTo}" FontSize="16"></TextBlock>
+                        <TextBlock Text="{Binding Amount}" FontSize="20" Margin="20,0,0,0"></TextBlock>
+                        <TextBlock Text="{Binding FriendlyCurrency}" FontSize="16" Margin="20,0,0,0"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

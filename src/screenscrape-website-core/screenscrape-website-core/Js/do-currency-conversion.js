@@ -10,8 +10,9 @@ if (!!window['injectedFunction'] === false) {
 };
 
 function doWork() {
+    const params = new URLSearchParams(location.search);
     var amt = document.forms[0].children[1].children[0].children[1].innerText;
-    let result = { "result": amt };
+    let result = { "result": amt, "to": params.get("To"), "from": params.get("From") };
     window.chrome.webview.postMessage( JSON.stringify(result));
 }
 
