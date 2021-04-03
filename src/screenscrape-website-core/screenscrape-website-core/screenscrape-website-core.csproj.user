@@ -5,11 +5,11 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="CoinSearch.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CurrencyConverter.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <None Update="MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
 </Project>

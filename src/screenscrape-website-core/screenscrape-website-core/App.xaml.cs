@@ -45,16 +45,23 @@ namespace screenscrape_website_core
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new CurrencyConverter();
+
+            var windowTitle = "Coin Search";  //"$$$ Currency Converter";
+            var windowWidth = 900; //600;
+
+            //m_window = new CurrencyConverter();
+            m_window = new CoinSearch();
+
+
             var windowNative = m_window.As<IWindowNative>();
             m_windowHandle = windowNative.WindowHandle;
-            m_window.Title = "$$$ Currency Converter";
+            m_window.Title = windowTitle;
             m_window.Activate();
 
             // The Window object doesn't have Width and Height properties in WInUI 3 Desktop yet.
             // To set the Width and Height, you can use the Win32 API SetWindowPos.
             // Note, you should apply the DPI scale factor if you are thinking of dpi instead of pixels.
-            SetWindowSize(m_windowHandle, 600, 600);
+            SetWindowSize(m_windowHandle, windowWidth, 600);
 
         }
 

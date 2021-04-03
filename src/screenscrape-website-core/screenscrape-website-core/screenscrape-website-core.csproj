@@ -9,7 +9,9 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="CoinSearch.xaml" />
     <None Remove="CurrencyConverter.xaml" />
+    <None Remove="Js\do-cryptomarket-search.js" />
     <None Remove="Js\do-currency-conversion.js" />
     <None Remove="Js\flatuicolors.com.js" />
     <None Remove="Js\www.color-hex.com.js" />
@@ -17,6 +19,7 @@
     <None Remove="Js\www.xe.com.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Js\do-cryptomarket-search.js" />
     <EmbeddedResource Include="Js\flatuicolors.com.js" />
     <EmbeddedResource Include="Js\do-currency-conversion.js" />
     <EmbeddedResource Include="Js\www.xe.com.js" />
@@ -34,6 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="CoinSearch.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CurrencyConverter.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
