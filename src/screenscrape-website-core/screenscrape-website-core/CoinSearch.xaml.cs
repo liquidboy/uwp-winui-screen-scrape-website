@@ -30,7 +30,7 @@ namespace screenscrape_website_core
         bool _isProcessingCall = false;
         int _msTillNextCall = 500;
 
-        string[] _currencies = { "THETA", "THETA-FUEL", "OMG", "flamingo", "stellar", "cardano", "hedera-hashgraph" };
+        string[] _currencies = { "THETA", "THETA-FUEL", "OMG", "flamingo", "stellar", "cardano", "hedera-hashgraph", "bitcoin", "ethereum" };
 
         private class SearchResult {
             public string Name { get; set; }
@@ -40,6 +40,7 @@ namespace screenscrape_website_core
             public decimal CirculatingSupply { get; set; }
             public decimal MaxSupply { get; set; }
             public decimal TotalSupply { get; set; }
+            public decimal VolumeLast24Hrs { get; set; }
         }
 
         public CoinSearch()
@@ -101,10 +102,8 @@ namespace screenscrape_website_core
                 Price = Convert.ToDecimal(o["price"].Value<string>()),
                 CirculatingSupply = Convert.ToDecimal(o["circulatingSupply"].Value<string>()), //{0:C}
                 MaxSupply = Convert.ToDecimal(o["maxSupply"].Value<string>()),
-                TotalSupply = Convert.ToDecimal(o["totalSupply"].Value<string>())
-                //Amount = double.Parse(parts[0]),
-                //CurrencyFrom = o["from"].Value<string>(),
-                //CurrencyTo = o["to"].Value<string>()
+                TotalSupply = Convert.ToDecimal(o["totalSupply"].Value<string>()),
+                VolumeLast24Hrs = Convert.ToDecimal(o["volume24hr"].Value<string>()),
             };
 
             _results.Add(result);

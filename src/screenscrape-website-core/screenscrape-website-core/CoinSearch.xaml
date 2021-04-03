@@ -22,10 +22,20 @@
                         <TextBlock Text="{Binding Code}" FontSize="16" Margin="20,0,0,0" Width="80"></TextBlock>
                         <TextBlock Text="{Binding Price}" FontSize="20" Margin="20,0,0,0" Width="120"></TextBlock>
                         <StackPanel>
-                            <TextBlock Text="{Binding CirculatingSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
-                            <TextBlock Text="{Binding MaxSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
-                            <TextBlock Text="{Binding TotalSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Circulating: " FontSize="12" Width="60"></TextBlock>
+                                <TextBlock Text="{Binding CirculatingSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Max: " FontSize="12" Width="60"></TextBlock>
+                                <TextBlock Text="{Binding MaxSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Total: " FontSize="12" Width="60"></TextBlock>
+                                <TextBlock Text="{Binding TotalSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                            </StackPanel>
                         </StackPanel>
+                        <TextBlock Text="{Binding VolumeLast24Hrs}" FontSize="16" Margin="20,0,0,0" Width="120"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -19,11 +19,14 @@ function doWork() {
     let circulatingSupply = parseFloat(document.querySelectorAll('div[class*="statsValue"]')[4].innerText.replace(/,/g, ''));
     let maxSupply = parseFloat(document.querySelectorAll('div[class*="maxSupplyValue"]')[0].innerText.replace(/,/g, ''));
     let totalSupply = parseFloat(document.querySelectorAll('div[class*="maxSupplyValue"]')[1].innerText.replace(/,/g, ''));
+
+    let volume24hr = parseFloat(document.querySelectorAll('div[class*="statsValue"]')[2].innerText.substring(1).replace(/,/g, ''));
         
     let result = {
         "name": name, "code": code, "logo": logo,
         "price": price,
-        "circulatingSupply": circulatingSupply, "maxSupply": maxSupply, "totalSupply": totalSupply
+        "circulatingSupply": circulatingSupply, "maxSupply": maxSupply, "totalSupply": totalSupply,
+        "volume24hr": volume24hr
     }; 
     window.chrome.webview.postMessage( JSON.stringify(result));
 }
