@@ -9,6 +9,9 @@
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot">
+        <Grid.Resources>
+            <local:FormatConverter x:Key="FormatConverter" />
+        </Grid.Resources>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="32">
             <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Refresh"></Button>
             <TextBlock x:Name="lblProcessing" Margin="10,5,0,0"></TextBlock>
@@ -20,22 +23,22 @@
                         <Image Width="35" Source="{Binding Logo}" Height="35"></Image>
                         <TextBlock Text="{Binding Name}" FontSize="20" Margin="20,10,0,0" Width="170"></TextBlock>
                         <TextBlock Text="{Binding Code}" FontSize="16" Margin="20,12,0,0" Width="80"></TextBlock>
-                        <TextBlock Text="{Binding Price}" FontSize="20" Margin="20,10,0,0" Width="120"></TextBlock>
+                        <TextBlock Text="{Binding Price, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:c\},ConverterLanguage='en-AU' }" FontSize="20" Margin="20,10,0,0" Width="120"></TextBlock>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Circulating: " FontSize="12" Width="60"></TextBlock>
-                                <TextBlock Text="{Binding CirculatingSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                                <TextBlock Text="{Binding CirculatingSupply, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:n0\}}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Max: " FontSize="12" Width="60"></TextBlock>
-                                <TextBlock Text="{Binding MaxSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                                <TextBlock Text="{Binding MaxSupply, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:n0\}}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Total: " FontSize="12" Width="60"></TextBlock>
-                                <TextBlock Text="{Binding TotalSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
+                                <TextBlock Text="{Binding TotalSupply, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:n0\}}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
                             </StackPanel>
                         </StackPanel>
-                        <TextBlock Text="{Binding VolumeLast24Hrs}" FontSize="16" Margin="20,10,0,0" Width="120"></TextBlock>
+                        <TextBlock Text="{Binding VolumeLast24Hrs, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:c\},ConverterLanguage='en-AU' }" FontSize="16" Margin="20,10,0,0" Width="120"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
