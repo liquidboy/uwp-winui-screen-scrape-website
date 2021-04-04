@@ -18,9 +18,9 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="35" Source="{Binding Logo}" Height="35"></Image>
-                        <TextBlock Text="{Binding Name}" FontSize="20" Margin="20,0,0,0" Width="170"></TextBlock>
-                        <TextBlock Text="{Binding Code}" FontSize="16" Margin="20,0,0,0" Width="80"></TextBlock>
-                        <TextBlock Text="{Binding Price}" FontSize="20" Margin="20,0,0,0" Width="120"></TextBlock>
+                        <TextBlock Text="{Binding Name}" FontSize="20" Margin="20,10,0,0" Width="170"></TextBlock>
+                        <TextBlock Text="{Binding Code}" FontSize="16" Margin="20,12,0,0" Width="80"></TextBlock>
+                        <TextBlock Text="{Binding Price}" FontSize="20" Margin="20,10,0,0" Width="120"></TextBlock>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Circulating: " FontSize="12" Width="60"></TextBlock>
@@ -35,7 +35,7 @@
                                 <TextBlock Text="{Binding TotalSupply}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
                             </StackPanel>
                         </StackPanel>
-                        <TextBlock Text="{Binding VolumeLast24Hrs}" FontSize="16" Margin="20,0,0,0" Width="120"></TextBlock>
+                        <TextBlock Text="{Binding VolumeLast24Hrs}" FontSize="16" Margin="20,10,0,0" Width="120"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
