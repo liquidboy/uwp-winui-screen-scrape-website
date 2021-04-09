@@ -23,13 +23,7 @@ namespace screenscrape_website_core
 {
     public sealed partial class CoinSearch : Window
     {
-        private WebView2 _wv;
-
-        Queue<string> _calls = new Queue<string>();
-        ObservableCollection<SearchResult> _results = new ObservableCollection<SearchResult>();
-        bool _isProcessingCall = false;
-        int _msTillNextCall = 500;
-
+        WebviewService<SearchResult> webviewService = new WebviewService<SearchResult>();
         string[] _currencies = { "THETA", "THETA-FUEL", "OMG", "flamingo", "stellar", "cardano", "hedera-hashgraph", "bitcoin", "ethereum" };
 
         private class SearchResult {
@@ -50,27 +44,17 @@ namespace screenscrape_website_core
         }
 
         void ClearAll() {
-            _results.Clear();
-            _calls.Clear();
-            _isProcessingCall = false;
+            webviewService.ClearAll();
             lblProcessing.Text = "";
         }
 
         void SetupWebViewScraper() {
-            _wv = new WebView2()
-            {
-                Margin = new Thickness() { Left = 0, Top = 60, Right = 0, Bottom = 0 },
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                //Width = 900,
-                Height = 600,
-                Visibility = Visibility.Collapsed
-            };
-            _wv.WebMessageReceived += _wv_WebMessageReceived;
-            _wv.NavigationCompleted += _wv_NavigationCompleted;
-            layoutRoot.Children.Add(_wv);
+            webviewService.SetupWebView();
+            webviewService.CurrentWebView.WebMessageReceived += _wv_WebMessageReceived;
+            webviewService.CurrentWebView.NavigationCompleted += _wv_NavigationCompleted;
+            layoutRoot.Children.Add(webviewService.CurrentWebView);
 
-            lbResults.ItemsSource = _results;
+            lbResults.ItemsSource = webviewService._results;
         }
 
         private async void _wv_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
@@ -79,7 +63,7 @@ namespace screenscrape_website_core
             var json = LoadJsonFromEmbeddedResource("do-currency-conversion.js");
             try
             {
-                await _wv.ExecuteScriptAsync(json);
+                await webviewService.CurrentWebView.ExecuteScriptAsync(json);
             }
             catch (Exception ex)
             {
@@ -89,7 +73,7 @@ namespace screenscrape_website_core
 
         private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)
         {
-            _isProcessingCall = false;
+            webviewService.StopProcessingCall();
 
             var msg = args.TryGetWebMessageAsString();
             JObject o = JObject.Parse(msg);
@@ -106,9 +90,9 @@ namespace screenscrape_website_core
                 VolumeLast24Hrs = Convert.ToDecimal(o["volume24hr"].Value<string>()),
             };
 
-            _results.Add(result);
+            webviewService._results.Add(result);
 
-            ProcessCalls(_msTillNextCall);
+            ProcessCalls(webviewService._msTillNextCall);
         }
 
         private string LoadJsonFromEmbeddedResource(string siteUrl)
@@ -128,7 +112,7 @@ namespace screenscrape_website_core
 
         private void butDoConversion_Click(object sender, RoutedEventArgs e)
         {
-            if (_isProcessingCall) return;
+            if (webviewService.IsProcessingCall) return;
 
             ClearAll();
             lblProcessing.Text = "processing ...";
@@ -136,7 +120,7 @@ namespace screenscrape_website_core
             foreach (var cur in _currencies)
             {
                 var url = $"https://coinmarketcap.com/currencies/{ cur }/";
-                _calls.Enqueue(url);
+                webviewService.AddJob(url);
             }
 
             ProcessCalls();
@@ -145,24 +129,16 @@ namespace screenscrape_website_core
         private void ProcessCalls(int waitMillisecondsBeforeNextCall = 0) 
         {
             UpdateUI();
-
-            // do job
-            if (_calls.Count > 0)
-            {
-                if (waitMillisecondsBeforeNextCall > 0) System.Threading.Thread.Sleep(waitMillisecondsBeforeNextCall);
-                _isProcessingCall = true;
-                var url = _calls.Dequeue();
-                _wv.Source = new Uri(url);
-            }
+            webviewService.ProcessJob(waitMillisecondsBeforeNextCall);
         }
 
         private void UpdateUI() {
             // update ui to let user know its processing
-            if (_calls.Count == 0)
+            if (!webviewService.HasJobs())
             {
                 lblProcessing.Text = "";
             }
-            else if (_calls.Count > 0)
+            else if (webviewService.HasJobs())
             {
                 lblProcessing.Text += ".";
             }
