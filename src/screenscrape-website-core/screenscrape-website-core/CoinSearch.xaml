@@ -38,7 +38,7 @@
                                 <TextBlock Text="{Binding TotalSupply, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:n0\}}" FontSize="12" Margin="20,0,0,0" Width="120"></TextBlock>
                             </StackPanel>
                         </StackPanel>
-                        <TextBlock Text="{Binding VolumeLast24Hrs, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:c\},ConverterLanguage='en-AU' }" FontSize="16" Margin="20,10,0,0" Width="120"></TextBlock>
+                        <TextBlock Text="{Binding VolumeLast24Hrs, Converter={StaticResource FormatConverter}, ConverterParameter=\{0:c\},ConverterLanguage='en-AU' }" FontSize="16" Margin="20,10,0,0" Width="150"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
