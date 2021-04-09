@@ -62,7 +62,7 @@ namespace screenscrape_website_core
                 Margin = new Thickness() { Left = 0, Top = 60, Right = 0, Bottom = 0 },
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Stretch,
-                Width = 900,
+                //Width = 900,
                 Height = 600,
                 Visibility = Visibility.Collapsed
             };

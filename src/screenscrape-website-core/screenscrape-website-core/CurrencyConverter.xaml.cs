@@ -23,13 +23,7 @@ namespace screenscrape_website_core
 {
     public sealed partial class CurrencyConverter : Window
     {
-        private WebView2 _wv;
-
-        Queue<string> _calls = new Queue<string>();
-        ObservableCollection<CurrencyConversionResult> _results = new ObservableCollection<CurrencyConversionResult>();
-        bool _isProcessingCall = false;
-        int _msTillNextCall = 500;
-
+        WebviewService<CurrencyConversionResult> webviewService = new WebviewService<CurrencyConversionResult>();
         string[] _currencies = { "AUD", "CAD", "CNY", "EUR", "JPY", "GBP", "USD" };
 
         private class CurrencyConversionResult {
@@ -47,29 +41,22 @@ namespace screenscrape_website_core
         }
 
         void ClearAll() {
-            _results.Clear();
-            _calls.Clear();
-            _isProcessingCall = false;
+            webviewService.ClearAll();
             lblProcessing.Text = "";
         }
 
-        void SetupWebViewScraper() {
-            _wv = new WebView2()
-            {
-                Margin = new Thickness() { Left = -1000, Top = 0, Right = 0, Bottom = 0 },
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Width = 150,
-            };
-            _wv.WebMessageReceived += _wv_WebMessageReceived;
-            _wv.NavigationCompleted += _wv_NavigationCompleted;
-            layoutRoot.Children.Add(_wv);
+        void SetupWebViewScraper() 
+        {
+            webviewService.SetupWebView();
+            webviewService.CurrentWebView.WebMessageReceived += _wv_WebMessageReceived;
+            webviewService.CurrentWebView.NavigationCompleted += _wv_NavigationCompleted;
+            layoutRoot.Children.Add(webviewService.CurrentWebView);
 
             foreach (var cur in _currencies) {
                 cbFrom.Items.Add(new ComboBoxItem() { Content = cur });
             }
             cbFrom.SelectedIndex = 0;
-            lbResults.ItemsSource = _results;
+            lbResults.ItemsSource = webviewService._results;
         }
 
         private async void _wv_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
@@ -78,7 +65,7 @@ namespace screenscrape_website_core
             var json = LoadJsonFromEmbeddedResource("do-currency-conversion.js");
             try
             {
-                await _wv.ExecuteScriptAsync(json);
+                await webviewService.CurrentWebView.ExecuteScriptAsync(json);
             }
             catch (Exception ex)
             {
@@ -88,7 +75,7 @@ namespace screenscrape_website_core
 
         private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)
         {
-            _isProcessingCall = false;
+            webviewService.StopProcessingCall();
 
             var msg = args.TryGetWebMessageAsString();
             JObject o = JObject.Parse(msg);
@@ -108,13 +95,10 @@ namespace screenscrape_website_core
                 result.FriendlyCurrency += parts[i] + " ";
             }
 
-            _results.Add(result);
+            webviewService._results.Add(result);
 
-            ProcessCalls(_msTillNextCall);
+            ProcessCalls(webviewService._msTillNextCall);
         }
-
-        
-
 
         private string LoadJsonFromEmbeddedResource(string siteUrl)
         {
@@ -133,7 +117,7 @@ namespace screenscrape_website_core
 
         private void butDoConversion_Click(object sender, RoutedEventArgs e)
         {
-            if (_isProcessingCall) return;
+            if (webviewService.IsProcessingCall) return;
 
             ClearAll();
             lblProcessing.Text = "processing ...";
@@ -144,7 +128,7 @@ namespace screenscrape_website_core
                 var to = cur;
                 if (!from.Equals(to)) {
                     var url = $"https://www.xe.com/currencyconverter/convert/?Amount={ tbAmount.Text }&From={ from }&To={ to }";
-                    _calls.Enqueue(url);
+                    webviewService.AddJob(url);
                 }
             }
 
@@ -154,24 +138,16 @@ namespace screenscrape_website_core
         private void ProcessCalls(int waitMillisecondsBeforeNextCall = 0) 
         {
             UpdateUI();
-
-            // do job
-            if (_calls.Count > 0)
-            {
-                if (waitMillisecondsBeforeNextCall > 0) System.Threading.Thread.Sleep(waitMillisecondsBeforeNextCall);
-                _isProcessingCall = true;
-                var url = _calls.Dequeue();
-                _wv.Source = new Uri(url);
-            }
+            webviewService.ProcessJob(waitMillisecondsBeforeNextCall);
         }
 
         private void UpdateUI() {
             // update ui to let user know its processing
-            if (_calls.Count == 0)
+            if (!webviewService.HasJobs())
             {
                 lblProcessing.Text = "";
             }
-            else if (_calls.Count > 0)
+            else if (webviewService.HasJobs())
             {
                 lblProcessing.Text += ".";
             }
