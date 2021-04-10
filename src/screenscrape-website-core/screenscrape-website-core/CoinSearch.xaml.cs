@@ -60,7 +60,7 @@ namespace screenscrape_website_core
         private async void _wv_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
             if (!args.IsSuccess) return;
-            var json = LoadJsonFromEmbeddedResource("do-currency-conversion.js");
+            var json = LoadJsonFromEmbeddedResource("do-cryptomarket-search.js");
             try
             {
                 await webviewService.CurrentWebView.ExecuteScriptAsync(json);
@@ -92,13 +92,13 @@ namespace screenscrape_website_core
 
             webviewService._results.Add(result);
 
-            ProcessCalls(webviewService._msTillNextCall);
+            ProcessCalls(webviewService.msTillNextCall);
         }
 
-        private string LoadJsonFromEmbeddedResource(string siteUrl)
+        private string LoadJsonFromEmbeddedResource(string injectJsFile)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith($"do-cryptomarket-search.js"));
+            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(injectJsFile));
 
             var json = string.Empty;
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))

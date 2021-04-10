@@ -97,13 +97,13 @@ namespace screenscrape_website_core
 
             webviewService._results.Add(result);
 
-            ProcessCalls(webviewService._msTillNextCall);
+            ProcessCalls(webviewService.msTillNextCall);
         }
 
-        private string LoadJsonFromEmbeddedResource(string siteUrl)
+        private string LoadJsonFromEmbeddedResource(string injectJsFile)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith($"do-currency-conversion.js"));
+            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(injectJsFile));
 
             var json = string.Empty;
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))

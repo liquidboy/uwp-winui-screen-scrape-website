@@ -27,7 +27,7 @@ namespace screenscrape_website_core
         Queue<string> _calls = new Queue<string>();
         public ObservableCollection<T> _results = new ObservableCollection<T>();
         bool _isProcessingCall = false;
-        public int _msTillNextCall = 500;
+        public int msTillNextCall = 500;
 
         public WebView2 CurrentWebView => _wv;
         public bool IsProcessingCall => _isProcessingCall;
