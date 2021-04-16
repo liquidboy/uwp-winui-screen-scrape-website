@@ -33,10 +33,12 @@ namespace screenscrape_website_core
         public bool IsProcessingCall => _isProcessingCall;
         private Func<JObject, T> _dataConverter;
         private Action _onCompletedRecievingUpdate;
+        private string _scriptToCall;
 
-        public void SetupWebView(Func<JObject, T> dataConverter, Action onCompletedRecievingUpdate) {
+        public void SetupWebView(Func<JObject, T> dataConverter, Action onCompletedRecievingUpdate, string scriptToCall) {
             _onCompletedRecievingUpdate = onCompletedRecievingUpdate;
             _dataConverter = dataConverter;
+            _scriptToCall = scriptToCall;
             _wv = new WebView2()
             {
                 Margin = new Thickness() { Left = 0, Top = 60, Right = 0, Bottom = 0 },
@@ -47,6 +49,36 @@ namespace screenscrape_website_core
                 Visibility = Visibility.Collapsed
             };
             _wv.WebMessageReceived += _wv_WebMessageReceived;
+            _wv.NavigationCompleted += _wv_NavigationCompleted;
+        }
+
+        private async void _wv_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+        {
+            if (!args.IsSuccess) return;
+            var json = LoadJsonFromEmbeddedResource(_scriptToCall);
+            try
+            {
+                await _wv.ExecuteScriptAsync(json);
+            }
+            catch (Exception ex)
+            {
+                // todo: handle exceptions
+            }
+        }
+
+        private string LoadJsonFromEmbeddedResource(string injectJsFile)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(injectJsFile));
+
+            var json = string.Empty;
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return json;
         }
 
         private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)

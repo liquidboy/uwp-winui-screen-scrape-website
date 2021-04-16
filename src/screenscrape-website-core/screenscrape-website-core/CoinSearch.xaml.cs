@@ -66,41 +66,11 @@ namespace screenscrape_website_core
                 }, 
                 ()=> {
                     UpdateUI();
-                }
+                },
+                "do-cryptomarket-search.js"
             );
-            webviewService.CurrentWebView.NavigationCompleted += _wv_NavigationCompleted;
             layoutRoot.Children.Add(webviewService.CurrentWebView);
-
             lbResults.ItemsSource = webviewService._results;
-        }
-
-        private async void _wv_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
-        {
-            if (!args.IsSuccess) return;
-            var json = LoadJsonFromEmbeddedResource("do-cryptomarket-search.js");
-            try
-            {
-                await webviewService.CurrentWebView.ExecuteScriptAsync(json);
-            }
-            catch (Exception ex)
-            {
-                // todo: handle exceptions
-            }
-        }
-
-        private string LoadJsonFromEmbeddedResource(string injectJsFile)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith(injectJsFile));
-
-            var json = string.Empty;
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                json = reader.ReadToEnd();
-            }
-
-            return json;
         }
 
         private void butDoConversion_Click(object sender, RoutedEventArgs e)
@@ -120,11 +90,6 @@ namespace screenscrape_website_core
             webviewService.ProcessJob(0);
         }
 
-        //private void ProcessCalls(int waitMillisecondsBeforeNextCall = 0) 
-        //{
-        //    UpdateUI();
-        //}
-
         private void UpdateUI() {
             // update ui to let user know its processing
             if (!webviewService.HasJobs())
@@ -136,7 +101,5 @@ namespace screenscrape_website_core
                 lblProcessing.Text += ".";
             }
         }
-
-
     }
 }
