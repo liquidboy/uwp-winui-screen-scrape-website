@@ -45,10 +45,23 @@ namespace screenscrape_website_core
             lblProcessing.Text = "";
         }
 
-        void SetupWebViewScraper() 
+        void SetupWebViewScraper()
         {
-            webviewService.SetupWebView();
-            webviewService.CurrentWebView.WebMessageReceived += _wv_WebMessageReceived;
+            webviewService.SetupWebView(
+                (o) => {
+                    var parts = o["result"].Value<string>().Split(" ");
+                    var result = new CurrencyConversionResult()
+                    {
+                        Result = o["result"].Value<string>(),
+                        Amount = double.Parse(parts[0]),
+                        CurrencyFrom = o["from"].Value<string>(),
+                        CurrencyTo = o["to"].Value<string>()
+                    };
+                    return result;
+                }, 
+                () => { }
+            );
+            //webviewService.CurrentWebView.WebMessageReceived += _wv_WebMessageReceived;
             webviewService.CurrentWebView.NavigationCompleted += _wv_NavigationCompleted;
             layoutRoot.Children.Add(webviewService.CurrentWebView);
 
@@ -73,32 +86,32 @@ namespace screenscrape_website_core
             }
         }
 
-        private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)
-        {
-            webviewService.StopProcessingCall();
+        //private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)
+        //{
+        //    webviewService.StopProcessingCall();
 
-            var msg = args.TryGetWebMessageAsString();
-            JObject o = JObject.Parse(msg);
+        //    var msg = args.TryGetWebMessageAsString();
+        //    JObject o = JObject.Parse(msg);
 
-            var parts = o["result"].Value<string>().Split(" ");
+        //    var parts = o["result"].Value<string>().Split(" ");
 
-            var result = new CurrencyConversionResult()
-            {
-                Result = o["result"].Value<string>(),
-                Amount = double.Parse(parts[0]),
-                CurrencyFrom = o["from"].Value<string>(),
-                CurrencyTo = o["to"].Value<string>()
-            };
+        //    var result = new CurrencyConversionResult()
+        //    {
+        //        Result = o["result"].Value<string>(),
+        //        Amount = double.Parse(parts[0]),
+        //        CurrencyFrom = o["from"].Value<string>(),
+        //        CurrencyTo = o["to"].Value<string>()
+        //    };
 
-            for (int i = 1; i < parts.Length; i++)
-            {
-                result.FriendlyCurrency += parts[i] + " ";
-            }
+        //    for (int i = 1; i < parts.Length; i++)
+        //    {
+        //        result.FriendlyCurrency += parts[i] + " ";
+        //    }
 
-            webviewService._results.Add(result);
+        //    webviewService._results.Add(result);
 
-            ProcessCalls(webviewService.msTillNextCall);
-        }
+        //    ProcessCalls(webviewService.msTillNextCall);
+        //}
 
         private string LoadJsonFromEmbeddedResource(string injectJsFile)
         {

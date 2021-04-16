@@ -49,8 +49,25 @@ namespace screenscrape_website_core
         }
 
         void SetupWebViewScraper() {
-            webviewService.SetupWebView();
-            webviewService.CurrentWebView.WebMessageReceived += _wv_WebMessageReceived;
+            webviewService.SetupWebView(
+                (o) => {
+                    var result = new SearchResult()
+                    {
+                        Name = o["name"].Value<string>(),
+                        Code = o["code"].Value<string>(),
+                        Logo = o["logo"].Value<string>(),
+                        Price = Convert.ToDecimal(o["price"].Value<string>()),
+                        CirculatingSupply = Convert.ToDecimal(o["circulatingSupply"].Value<string>()), //{0:C}
+                        MaxSupply = Convert.ToDecimal(o["maxSupply"].Value<string>()),
+                        TotalSupply = Convert.ToDecimal(o["totalSupply"].Value<string>()),
+                        VolumeLast24Hrs = Convert.ToDecimal(o["volume24hr"].Value<string>()),
+                    };
+                    return result;
+                }, 
+                ()=> {
+                    UpdateUI();
+                }
+            );
             webviewService.CurrentWebView.NavigationCompleted += _wv_NavigationCompleted;
             layoutRoot.Children.Add(webviewService.CurrentWebView);
 
@@ -69,30 +86,6 @@ namespace screenscrape_website_core
             {
                 // todo: handle exceptions
             }
-        }
-
-        private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)
-        {
-            webviewService.StopProcessingCall();
-
-            var msg = args.TryGetWebMessageAsString();
-            JObject o = JObject.Parse(msg);
-
-            var result = new SearchResult()
-            {
-                Name = o["name"].Value<string>(),
-                Code = o["code"].Value<string>(),
-                Logo = o["logo"].Value<string>(),
-                Price = Convert.ToDecimal(o["price"].Value<string>()),
-                CirculatingSupply = Convert.ToDecimal(o["circulatingSupply"].Value<string>()), //{0:C}
-                MaxSupply = Convert.ToDecimal(o["maxSupply"].Value<string>()),
-                TotalSupply = Convert.ToDecimal(o["totalSupply"].Value<string>()),
-                VolumeLast24Hrs = Convert.ToDecimal(o["volume24hr"].Value<string>()),
-            };
-
-            webviewService._results.Add(result);
-
-            ProcessCalls(webviewService.msTillNextCall);
         }
 
         private string LoadJsonFromEmbeddedResource(string injectJsFile)
@@ -123,14 +116,14 @@ namespace screenscrape_website_core
                 webviewService.AddJob(url);
             }
 
-            ProcessCalls();
+            UpdateUI();
+            webviewService.ProcessJob(0);
         }
 
-        private void ProcessCalls(int waitMillisecondsBeforeNextCall = 0) 
-        {
-            UpdateUI();
-            webviewService.ProcessJob(waitMillisecondsBeforeNextCall);
-        }
+        //private void ProcessCalls(int waitMillisecondsBeforeNextCall = 0) 
+        //{
+        //    UpdateUI();
+        //}
 
         private void UpdateUI() {
             // update ui to let user know its processing

@@ -31,8 +31,12 @@ namespace screenscrape_website_core
 
         public WebView2 CurrentWebView => _wv;
         public bool IsProcessingCall => _isProcessingCall;
+        private Func<JObject, T> _dataConverter;
+        private Action _onCompletedRecievingUpdate;
 
-        public void SetupWebView() {
+        public void SetupWebView(Func<JObject, T> dataConverter, Action onCompletedRecievingUpdate) {
+            _onCompletedRecievingUpdate = onCompletedRecievingUpdate;
+            _dataConverter = dataConverter;
             _wv = new WebView2()
             {
                 Margin = new Thickness() { Left = 0, Top = 60, Right = 0, Bottom = 0 },
@@ -42,6 +46,20 @@ namespace screenscrape_website_core
                 Height = 600,
                 Visibility = Visibility.Collapsed
             };
+            _wv.WebMessageReceived += _wv_WebMessageReceived;
+        }
+
+        private void _wv_WebMessageReceived(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            StopProcessingCall();
+
+            var msg = args.TryGetWebMessageAsString();
+            JObject o = JObject.Parse(msg);
+            var result = _dataConverter(o);
+            _results.Add(result);
+
+            _onCompletedRecievingUpdate?.Invoke();
+            ProcessJob(msTillNextCall);
         }
 
         public void StopProcessingCall()
