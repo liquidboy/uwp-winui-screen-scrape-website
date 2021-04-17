@@ -23,10 +23,11 @@ namespace screenscrape_website_core
 {
     public sealed partial class CurrencyConverter : Window
     {
-        WebviewService<CurrencyConversionResult> webviewService = new WebviewService<CurrencyConversionResult>();
+        WebviewService webviewService = new WebviewService();
         string[] _currencies = { "AUD", "CAD", "CNY", "EUR", "JPY", "GBP", "USD" };
 
-        private class CurrencyConversionResult {
+        private class CurrencyConversionResult : IWebViewResult
+        {
             public double Amount { get; set; }
             public string FriendlyCurrency { get; set; }
             public string Result { get; set; }
@@ -59,7 +60,9 @@ namespace screenscrape_website_core
                     };
                     return result;
                 }, 
-                () => { },
+                () => {
+                    UpdateUI();
+                },
                 "do-currency-conversion.js"
             );
             layoutRoot.Children.Add(webviewService.CurrentWebView);
@@ -93,7 +96,6 @@ namespace screenscrape_website_core
         }
 
         private void UpdateUI() {
-            // update ui to let user know its processing
             if (!webviewService.HasJobs())
             {
                 lblProcessing.Text = "";

@@ -20,22 +20,26 @@ using Windows.Foundation.Collections;
 using WinRT;
 namespace screenscrape_website_core
 {
-    class WebviewService<T>
+
+    interface IWebViewResult { 
+    }
+
+    class WebviewService
     {
         WebView2 _wv;
 
         Queue<string> _calls = new Queue<string>();
-        public ObservableCollection<T> _results = new ObservableCollection<T>();
+        public ObservableCollection<IWebViewResult> _results = new ObservableCollection<IWebViewResult>();
         bool _isProcessingCall = false;
         public int msTillNextCall = 500;
 
         public WebView2 CurrentWebView => _wv;
         public bool IsProcessingCall => _isProcessingCall;
-        private Func<JObject, T> _dataConverter;
+        private Func<JObject, IWebViewResult> _dataConverter;
         private Action _onCompletedRecievingUpdate;
         private string _scriptToCall;
 
-        public void SetupWebView(Func<JObject, T> dataConverter, Action onCompletedRecievingUpdate, string scriptToCall) {
+        public void SetupWebView(Func<JObject, IWebViewResult> dataConverter, Action onCompletedRecievingUpdate, string scriptToCall) {
             _onCompletedRecievingUpdate = onCompletedRecievingUpdate;
             _dataConverter = dataConverter;
             _scriptToCall = scriptToCall;

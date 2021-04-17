@@ -23,10 +23,11 @@ namespace screenscrape_website_core
 {
     public sealed partial class CoinSearch : Window
     {
-        WebviewService<SearchResult> webviewService = new WebviewService<SearchResult>();
-        string[] _currencies = { "THETA", "THETA-FUEL", "OMG", "flamingo", "stellar", "cardano", "hedera-hashgraph", "bitcoin", "ethereum" };
+        WebviewService webviewService = new WebviewService();
+        string[] _coins = { "THETA", "THETA-FUEL", "OMG", "flamingo", "stellar", "cardano", "hedera-hashgraph", "bitcoin", "ethereum" };
 
-        private class SearchResult {
+        private class SearchResult : IWebViewResult
+        {
             public string Name { get; set; }
             public string Code { get; set; }
             public string Logo { get; set; }
@@ -80,7 +81,7 @@ namespace screenscrape_website_core
             ClearAll();
             lblProcessing.Text = "processing ...";
 
-            foreach (var cur in _currencies)
+            foreach (var cur in _coins)
             {
                 var url = $"https://coinmarketcap.com/currencies/{ cur }/";
                 webviewService.AddJob(url);
@@ -91,7 +92,6 @@ namespace screenscrape_website_core
         }
 
         private void UpdateUI() {
-            // update ui to let user know its processing
             if (!webviewService.HasJobs())
             {
                 lblProcessing.Text = "";
