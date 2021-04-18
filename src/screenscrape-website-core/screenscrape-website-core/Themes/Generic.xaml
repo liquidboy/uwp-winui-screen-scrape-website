@@ -1,0 +1,28 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:screenscrape_website_core">
+
+    <Style TargetType="local:AppShell" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:AppShell">
+                    <Border x:Name="layoutRoot">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="34"></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ContentControl Grid.Row="0" Content="{Binding HeaderContent}"></ContentControl>
+                            <ContentControl Grid.Row="1" Content="{Binding BodyContent}"></ContentControl>
+                            <Border Grid.Row="2" Background="Gray">
+                                <ContentControl Content="{Binding FooterContent}"></ContentControl>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

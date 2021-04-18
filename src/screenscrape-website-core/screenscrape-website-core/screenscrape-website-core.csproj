@@ -44,5 +44,8 @@
     <Page Update="CurrencyConverter.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

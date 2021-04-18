@@ -9,24 +9,36 @@
     mc:Ignorable="d">
 
     <Grid x:Name="layoutRoot">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="32">
-            <TextBox x:Name="tbAmount" Width="200" FontSize="18"></TextBox>
-            <ComboBox x:Name="cbFrom" ></ComboBox>
-            <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Converts To"></Button>
-        </StackPanel>
-        <ListBox Margin="0,40,0,30" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding CurrencyTo}" FontSize="16" Width="60"></TextBlock>
-                        <TextBlock Text="{Binding Amount}" FontSize="20" Margin="20,0,0,0" Width="100"></TextBlock>
-                        <TextBlock Text="{Binding FriendlyCurrency}" FontSize="16" Margin="20,0,0,0"></TextBlock>
+        <local:AppShell>
+            <local:AppShell.HeaderContent>
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="top" Height="32">
+                        <TextBox x:Name="tbAmount" Width="200" FontSize="18"></TextBox>
+                        <ComboBox x:Name="cbFrom" ></ComboBox>
+                        <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Converts To"></Button>
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Gray">
-            <TextBlock x:Name="lblProcessing" Margin="3" Foreground="White"></TextBlock>
-        </Border>
+                </ContentControl>
+            </local:AppShell.HeaderContent>
+            <local:AppShell.BodyContent>
+                <ContentControl>
+                    <ListBox x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding CurrencyTo}" FontSize="16" Width="60"></TextBlock>
+                                    <TextBlock Text="{Binding Amount}" FontSize="20" Margin="20,0,0,0" Width="100"></TextBlock>
+                                    <TextBlock Text="{Binding FriendlyCurrency}" FontSize="16" Margin="20,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ContentControl>
+            </local:AppShell.BodyContent>
+            <local:AppShell.FooterContent>
+                <ContentControl>
+                    <TextBlock x:Name="lblProcessing" Margin="3" Foreground="white"></TextBlock>
+                </ContentControl>
+            </local:AppShell.FooterContent>
+        </local:AppShell>
     </Grid>
 </Window>
