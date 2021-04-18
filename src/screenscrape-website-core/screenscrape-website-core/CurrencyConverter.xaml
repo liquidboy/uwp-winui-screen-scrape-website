@@ -13,9 +13,8 @@
             <TextBox x:Name="tbAmount" Width="200" FontSize="18"></TextBox>
             <ComboBox x:Name="cbFrom" ></ComboBox>
             <Button x:Name="butDoConversion" Click="butDoConversion_Click" Content="Converts To"></Button>
-            <TextBlock x:Name="lblProcessing" Margin="10,5,0,0"></TextBlock>
         </StackPanel>
-        <ListBox Margin="0,40,0,0" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <ListBox Margin="0,40,0,30" x:Name="lbResults" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -26,5 +25,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Gray">
+            <TextBlock x:Name="lblProcessing" Margin="3" Foreground="White"></TextBlock>
+        </Border>
     </Grid>
 </Window>
